@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forex Market Hours</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-top">
+        <div class="brand">
+          <img class="brand-logo-img" src="../icons/icon128.png" alt="Forex Market Hours" />
+          <div class="brand-text">
+            <h1>Forex Market Hours</h1>
+            <p id="utc-clock" class="utc-clock">--:--:-- UTC</p>
+          </div>
+        </div>
+        <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </button>
+      </div>
+      <div class="summary" id="summary">
+        <span class="pulse" aria-hidden="true"></span>
+        <span id="summary-text">Loading markets…</span>
+      </div>
+    </header>
+
+    <main id="markets" class="markets" aria-live="polite"></main>
+
+    <div id="empty-state" class="empty-state hidden">
+      <p>No markets selected.</p>
+      <button id="empty-open-options" class="primary">Add markets</button>
+    </div>
+
+    <footer class="footer">
+      <span class="footer-left">
+        <span id="data-source">Local engine</span>
+      </span>
+      <a id="open-options" href="#">Manage markets</a>
+    </footer>
+    <div class="credit">
+      Powered by
+      <a href="mailto:amirreza.sh94@gmail.com">amirreza.sh94@gmail.com</a>
+    </div>
+
+    <template id="market-card-tpl">
+      <article class="market-card" data-id="">
+        <div class="card-main">
+          <div class="card-left">
+            <span class="flag" aria-hidden="true"></span>
+            <span class="status-dot" aria-hidden="true"></span>
+          </div>
+          <div class="card-body">
+            <div class="row-1">
+              <h2 class="market-name"></h2>
+              <span class="status-label"></span>
+            </div>
+            <div class="row-2">
+              <span class="local-time"></span>
+              <span class="local-day"></span>
+            </div>
+            <div class="row-3">
+              <span class="countdown-label"></span>
+              <span class="countdown-value"></span>
+            </div>
+            <div class="row-4 muted">
+              <span class="hours-range"></span>
+            </div>
+          </div>
+          <div class="card-map" aria-hidden="true"></div>
+        </div>
+        <div class="holiday-banner" hidden>
+          <span class="holiday-icon" aria-hidden="true">🏛️</span>
+          <span class="holiday-text"></span>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

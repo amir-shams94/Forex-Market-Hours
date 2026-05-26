@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forex Market Hours – Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="page-header">
+        <div class="brand">
+          <img class="brand-logo-img" src="../icons/icon128.png" alt="Forex Market Hours" />
+          <div>
+            <h1>Forex Market Hours</h1>
+            <p class="subtitle">Configure the markets, sessions and data source.</p>
+          </div>
+        </div>
+      </header>
+
+      <section class="card">
+        <header class="card-header">
+          <h2>Tracked markets</h2>
+          <p>Pick the markets you want to see in the popup and on the toolbar badge.</p>
+        </header>
+        <div id="market-list" class="market-list"></div>
+      </section>
+
+      <section class="card">
+        <header class="card-header">
+          <h2>Add a custom market</h2>
+          <p>Track any market by entering its IANA timezone, country and session hours.</p>
+        </header>
+        <form id="custom-form" class="custom-form">
+          <div class="grid">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" placeholder="e.g. Istanbul" required />
+            </label>
+            <label>
+              <span>Country code (ISO-2)</span>
+              <input type="text" name="countryCode" placeholder="e.g. TR"
+                     maxlength="2" autocapitalize="characters" style="text-transform: uppercase" />
+            </label>
+            <label>
+              <span>Flag emoji</span>
+              <input type="text" name="flag" placeholder="🇹🇷" maxlength="6" />
+            </label>
+            <label>
+              <span>IANA timezone</span>
+              <input type="text" name="timezone" placeholder="Europe/Istanbul" required />
+            </label>
+            <label>
+              <span>Open (local)</span>
+              <input type="time" name="open" value="09:00" required />
+            </label>
+            <label>
+              <span>Close (local)</span>
+              <input type="time" name="close" value="17:00" required />
+            </label>
+            <label class="full">
+              <span>Trading days</span>
+              <div class="days">
+                <label><input type="checkbox" name="day" value="1" checked /> Mon</label>
+                <label><input type="checkbox" name="day" value="2" checked /> Tue</label>
+                <label><input type="checkbox" name="day" value="3" checked /> Wed</label>
+                <label><input type="checkbox" name="day" value="4" checked /> Thu</label>
+                <label><input type="checkbox" name="day" value="5" checked /> Fri</label>
+                <label><input type="checkbox" name="day" value="6" /> Sat</label>
+                <label><input type="checkbox" name="day" value="0" /> Sun</label>
+              </div>
+            </label>
+            <label class="full">
+              <span>FinID (optional, for TradingHours.com API)</span>
+              <input type="text" name="finId" placeholder="e.g. tr.bist" />
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="primary">Add market</button>
+            <span id="custom-error" class="error"></span>
+          </div>
+        </form>
+
+        <div id="custom-markets" class="custom-markets"></div>
+      </section>
+
+      <section class="card">
+        <header class="card-header">
+          <h2>Data source</h2>
+          <p>
+            By default we compute open/close using built-in session hours. For institutional
+            accuracy (holidays, half-days, irregular hours) connect your
+            <a href="https://www.tradinghours.com/" target="_blank" rel="noopener noreferrer">tradinghours.com</a>
+            API key.
+          </p>
+        </header>
+        <div class="row toggle-row">
+          <label class="switch">
+            <input id="use-api" type="checkbox" />
+            <span class="slider"></span>
+          </label>
+          <span>Use TradingHours.com API when available</span>
+        </div>
+        <label class="api-row">
+          <span>API key</span>
+          <div class="api-input">
+            <input id="api-key" type="password" placeholder="Paste your TradingHours.com API token" autocomplete="off" />
+            <button id="test-api" class="ghost" type="button">Test</button>
+          </div>
+        </label>
+        <p id="api-status" class="api-status muted">Not connected.</p>
+      </section>
+
+      <section class="card">
+        <header class="card-header">
+          <h2>Notifications</h2>
+          <p>Get a desktop notification when a tracked market opens or closes.</p>
+        </header>
+        <div class="row toggle-row">
+          <label class="switch">
+            <input id="notifications" type="checkbox" />
+            <span class="slider"></span>
+          </label>
+          <span>Enable open/close notifications</span>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span id="save-indicator" class="muted">All changes are saved automatically.</span>
+        <span>v1.1.0</span>
+      </footer>
+
+      <p class="credit-line">
+        Powered by
+        <a href="mailto:amirreza.sh94@gmail.com">amirreza.sh94@gmail.com</a>
+      </p>
+    </div>
+
+    <template id="market-row-tpl">
+      <label class="market-row">
+        <input type="checkbox" />
+        <span class="map-thumb" aria-hidden="true"></span>
+        <span class="flag"></span>
+        <div class="info">
+          <span class="name"></span>
+          <span class="tz muted"></span>
+        </div>
+        <span class="hours muted"></span>
+      </label>
+    </template>
+
+    <template id="custom-row-tpl">
+      <div class="custom-row">
+        <span class="map-thumb" aria-hidden="true"></span>
+        <span class="flag"></span>
+        <div class="info">
+          <span class="name"></span>
+          <span class="tz muted"></span>
+        </div>
+        <span class="hours muted"></span>
+        <button class="danger" type="button">Remove</button>
+      </div>
+    </template>
+
+    <script type="module" src="options.js"></script>
+  </body>
+</html>
