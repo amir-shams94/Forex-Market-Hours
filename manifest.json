@@ -36,7 +36,7 @@
     "notifications"
   ],
   "host_permissions": [
-    "https://api.tradinghours.com/*"
+    "https://finnhub.io/*"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"

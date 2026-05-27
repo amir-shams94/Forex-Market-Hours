@@ -71,7 +71,7 @@
               </div>
             </label>
             <label class="full">
-              <span>FinID (optional, for TradingHours.com API)</span>
+              <span>FinID (optional, legacy — not needed for Finnhub)</span>
               <input type="text" name="finId" placeholder="e.g. tr.bist" />
             </label>
           </div>
@@ -89,9 +89,9 @@
           <h2>Data source</h2>
           <p>
             By default we compute open/close using built-in session hours. For institutional
-            accuracy (holidays, half-days, irregular hours) connect your
-            <a href="https://www.tradinghours.com/" target="_blank" rel="noopener noreferrer">tradinghours.com</a>
-            API key.
+            accuracy (live open/close and exchange holidays) add a free
+            <a href="https://finnhub.io/register" target="_blank" rel="noopener noreferrer">Finnhub</a>
+            API key (free tier after signup).
           </p>
         </header>
         <div class="row toggle-row">
@@ -99,12 +99,12 @@
             <input id="use-api" type="checkbox" />
             <span class="slider"></span>
           </label>
-          <span>Use TradingHours.com API when available</span>
+          <span>Use Finnhub live data when available (EXCH mode)</span>
         </div>
         <label class="api-row">
           <span>API key</span>
           <div class="api-input">
-            <input id="api-key" type="password" placeholder="Paste your TradingHours.com API token" autocomplete="off" />
+            <input id="api-key" type="password" placeholder="Paste your Finnhub API token" autocomplete="off" />
             <button id="test-api" class="ghost" type="button">Test</button>
           </div>
         </label>

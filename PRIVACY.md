@@ -10,9 +10,9 @@ plain language, what data the extension touches and what it does **not** do.
 
 - No analytics, no telemetry, no advertising IDs.
 - No user accounts, no sign-up, no cloud storage controlled by us.
-- The only outbound request the extension ever makes is to
-  `https://api.tradinghours.com`, and **only** if you explicitly enter a
-  tradinghours.com API key and enable the integration.
+- The only outbound requests the extension makes are to
+  `https://finnhub.io`, and **only** if you explicitly enter a
+  Finnhub API key and enable the integration.
 - All preferences are stored locally in Chrome's built-in
   [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/api/storage)
   area on your own Google account.
@@ -78,7 +78,7 @@ install), bookmarks, or any other browser data.
 
 The extension does not embed analytics SDKs, advertising libraries, social
 trackers, or any third-party code. The only third-party service it can talk to
-is `tradinghours.com`, and only when you opt in by providing an API key.
+is Finnhub, and only when you opt in by providing an API key.
 
 ## Children
 

@@ -13,17 +13,42 @@
           <img class="brand-logo-img" src="../icons/icon128.png" alt="Forex Market Hours" />
           <div class="brand-text">
             <h1>Forex Market Hours</h1>
-            <p id="utc-clock" class="utc-clock">--:--:-- UTC</p>
+            <p id="utc-clock" class="utc-clock">--:-- UTC</p>
+            <p id="user-clock" class="user-clock" title="Your Windows timezone"></p>
           </div>
         </div>
-        <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-          </svg>
-        </button>
+        <div class="header-actions">
+          <button id="time-swap-btn" class="icon-btn time-swap-btn" type="button"
+                  title="Swap Forex session vs Exchange hours" aria-label="Swap Forex session vs Exchange hours" data-format="fx">
+            <svg class="swap-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="swapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="55%" stop-color="#2dd4bf" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+              </defs>
+              <circle cx="12" cy="12" r="8.5" fill="rgba(45,212,191,0.08)" stroke="url(#swapGrad)" stroke-width="1.4" />
+              <path d="M12 8v4.2l2.6 1.5" fill="none" stroke="url(#swapGrad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M7.5 15.5h5.2M10.2 13.3l-2.7 2.2 2.7 2.2" fill="none" stroke="url(#swapGrad)" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16.5 8.5h-5.2M13.8 10.7l2.7-2.2-2.7-2.2" fill="none" stroke="url(#swapGrad)" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="swap-badge" id="swap-badge">FX</span>
+          </button>
+          <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0  0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+          </button>
+        </div>
       </div>
+      <div id="market-change-banner" class="market-change-banner" hidden role="status">
+        <span class="change-pulse" aria-hidden="true"></span>
+        <span id="market-change-text" class="market-change-text"></span>
+      </div>
+      <div id="format-toast" class="format-toast" hidden role="status"></div>
       <div class="summary" id="summary">
         <span class="pulse" aria-hidden="true"></span>
         <span id="summary-text">Loading markets…</span>

@@ -34,7 +34,7 @@ async function updateBadge() {
       await chrome.action.setBadgeTextColor?.({ color: '#ffffff' });
     }
     const lines = markets.map(m => {
-      const s = computeMarketStatus(m);
+      const s = computeMarketStatus(m, new Date(), { timeFormat: settings.timeFormat || '24h' });
       return `${m.name}: ${s.isOpen ? 'Open' : 'Closed'} (${s.localTime})`;
     });
     await chrome.action.setTitle({ title: lines.join('\n') });
@@ -53,7 +53,7 @@ async function handleNotifications() {
   const previous = stored[STORAGE_LAST_STATES] || {};
   const next = {};
   for (const m of markets) {
-    const status = computeMarketStatus(m);
+    const status = computeMarketStatus(m, new Date(), { timeFormat: settings.timeFormat || '24h' });
     next[m.id] = status.isOpen;
     if (previous[m.id] !== undefined && previous[m.id] !== status.isOpen) {
       const verb = status.isOpen ? 'opened' : 'closed';

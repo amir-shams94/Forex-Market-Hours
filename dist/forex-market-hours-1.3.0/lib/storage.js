@@ -10,6 +10,7 @@ const KEYS = {
   useApi: 'useTradingHoursApi',
   notifications: 'notificationsEnabled',
   timeFormat: 'timeFormat',
+  hoursMode: 'hoursMode',
   simulatedTime: 'simulatedTime'
 };
 
@@ -20,6 +21,7 @@ const DEFAULTS = {
   [KEYS.useApi]: false,
   [KEYS.notifications]: false,
   [KEYS.timeFormat]: '24h',
+  [KEYS.hoursMode]: 'fx', // 'fx' | 'exchange' (legacy 'cash' still accepted)
   [KEYS.simulatedTime]: null
 };
 

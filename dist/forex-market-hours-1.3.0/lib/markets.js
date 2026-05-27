@@ -13,7 +13,20 @@ export const DEFAULT_MARKETS = [
     flag: '\u{1F1E6}\u{1F1FA}',
     timezone: 'Australia/Sydney',
     finId: 'au.asx',
-    sessions: [{ open: '07:00', close: '16:00', days: [1, 2, 3, 4, 5] }]
+    // Two common references:
+    // - fx:   Sydney FX session convention
+    // - cash: ASX cash session
+    sessionsByMode: {
+      fx: [
+        { name: 'Pre-market', open: '06:00', close: '07:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'FX', open: '07:00', close: '16:00', days: [1, 2, 3, 4, 5] }
+      ],
+      exchange: [
+        { name: 'Pre-market', open: '09:00', close: '10:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'ASX', open: '10:00', close: '16:00', days: [1, 2, 3, 4, 5] }
+      ]
+    },
+    sessions: [{ name: 'FX', open: '07:00', close: '16:00', days: [1, 2, 3, 4, 5] }]
   },
   {
     id: 'tokyo',
@@ -23,7 +36,21 @@ export const DEFAULT_MARKETS = [
     flag: '\u{1F1EF}\u{1F1F5}',
     timezone: 'Asia/Tokyo',
     finId: 'jp.jpx',
-    sessions: [{ open: '09:00', close: '18:00', days: [1, 2, 3, 4, 5] }]
+    // Two common references:
+    // - fx:   Tokyo FX session convention
+    // - cash: JPX cash market hours (split session)
+    sessionsByMode: {
+      fx: [
+        { name: 'Pre-market', open: '08:00', close: '09:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'FX', open: '09:00', close: '18:00', days: [1, 2, 3, 4, 5] }
+      ],
+      exchange: [
+        { name: 'Pre-market', open: '08:00', close: '09:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'JPX AM', open: '09:00', close: '11:30', days: [1, 2, 3, 4, 5] },
+        { name: 'JPX PM', open: '12:30', close: '15:00', days: [1, 2, 3, 4, 5] }
+      ]
+    },
+    sessions: [{ name: 'FX', open: '09:00', close: '18:00', days: [1, 2, 3, 4, 5] }]
   },
   {
     id: 'hongkong',
@@ -43,7 +70,20 @@ export const DEFAULT_MARKETS = [
     flag: '\u{1F1E9}\u{1F1EA}',
     timezone: 'Europe/Berlin',
     finId: 'de.xetr',
-    sessions: [{ open: '08:00', close: '17:00', days: [1, 2, 3, 4, 5] }]
+    // Two common references:
+    // - fx:   Frankfurt FX session convention
+    // - cash: Xetra cash session
+    sessionsByMode: {
+      fx: [
+        { name: 'Pre-market', open: '07:00', close: '08:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'FX', open: '08:00', close: '17:00', days: [1, 2, 3, 4, 5] }
+      ],
+      exchange: [
+        { name: 'Pre-market', open: '08:00', close: '09:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'Xetra', open: '09:00', close: '17:30', days: [1, 2, 3, 4, 5] }
+      ]
+    },
+    sessions: [{ name: 'FX', open: '08:00', close: '17:00', days: [1, 2, 3, 4, 5] }]
   },
   {
     id: 'london',
@@ -63,7 +103,20 @@ export const DEFAULT_MARKETS = [
     flag: '\u{1F1FA}\u{1F1F8}',
     timezone: 'America/New_York',
     finId: 'us.nyse',
-    sessions: [{ open: '08:00', close: '17:00', days: [1, 2, 3, 4, 5] }]
+    // Two common references:
+    // - fx:   New York FX session convention (08:00–17:00 ET)
+    // - cash: NYSE cash market (09:30–16:00 ET)
+    sessionsByMode: {
+      fx: [
+        { name: 'Pre-market', open: '07:00', close: '08:00', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'FX', open: '08:00', close: '17:00', days: [1, 2, 3, 4, 5] }
+      ],
+      exchange: [
+        { name: 'Pre-market', open: '04:00', close: '09:30', days: [1, 2, 3, 4, 5], countsAsOpen: false },
+        { name: 'NYSE', open: '09:30', close: '16:00', days: [1, 2, 3, 4, 5] }
+      ]
+    },
+    sessions: [{ name: 'FX', open: '08:00', close: '17:00', days: [1, 2, 3, 4, 5] }]
   }
 ];
 

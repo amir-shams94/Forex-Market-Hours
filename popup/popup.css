@@ -59,6 +59,12 @@ body {
   gap: 8px;
 }
 
+.header-actions {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -92,6 +98,13 @@ body {
   letter-spacing: 0.4px;
 }
 
+.user-clock {
+  margin: 1px 0 0;
+  font-size: 10.5px;
+  color: var(--blue-2);
+  font-variant-numeric: tabular-nums;
+}
+
 .icon-btn {
   background: rgba(45, 212, 191, 0.06);
   border: 1px solid var(--border);
@@ -113,6 +126,132 @@ body {
 .icon-btn svg {
   width: 16px;
   height: 16px;
+}
+
+.time-swap-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.12), rgba(45, 212, 191, 0.08));
+  border-color: rgba(45, 212, 191, 0.28);
+  box-shadow: 0 4px 14px rgba(45, 212, 191, 0.15);
+}
+.time-swap-btn:hover {
+  color: var(--green-2);
+  box-shadow: 0 6px 18px rgba(52, 211, 153, 0.28);
+  transform: translateY(-1px);
+}
+.time-swap-btn[data-format='12h'] {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.18), rgba(52, 211, 153, 0.1));
+}
+.time-swap-btn[data-format='exchange'] {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.18), rgba(245, 158, 11, 0.08));
+}
+.time-swap-btn .swap-icon {
+  width: 20px;
+  height: 20px;
+}
+.swap-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -3px;
+  min-width: 17px;
+  height: 14px;
+  padding: 0 3px;
+  border-radius: 5px;
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 14px;
+  letter-spacing: -0.2px;
+  text-align: center;
+  color: #04141f;
+  background: var(--gradient-accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.market-change-banner {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  border: 1px solid transparent;
+  animation: changeSlideIn 0.35s ease;
+}
+.market-change-banner[hidden] { display: none; }
+.market-change-banner.is-open {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(45, 212, 191, 0.1));
+  border-color: rgba(52, 211, 153, 0.4);
+  color: #a7f3d0;
+}
+.market-change-banner.is-closed {
+  background: linear-gradient(135deg, rgba(100, 116, 139, 0.22), rgba(56, 189, 248, 0.08));
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #cbd5e1;
+}
+.change-pulse {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green-2);
+  box-shadow: 0 0 0 0 var(--green-glow);
+  animation: pulse 1.4s infinite;
+}
+.market-change-banner.is-closed .change-pulse {
+  background: var(--closed);
+  animation: none;
+  box-shadow: none;
+}
+.market-change-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.format-toast {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  color: #a5f3fc;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  line-height: 1.35;
+  animation: changeSlideIn 0.3s ease;
+}
+.format-toast[hidden] { display: none; }
+
+@keyframes changeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.market-card.just-changed {
+  animation: cardFlash 0.6s ease;
+  border-color: rgba(52, 211, 153, 0.55) !important;
+}
+.market-card.just-changed.closed {
+  border-color: rgba(56, 189, 248, 0.45) !important;
+}
+@keyframes cardFlash {
+  0%, 100% { box-shadow: var(--shadow); }
+  50% {
+    box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.35),
+                0 12px 32px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .summary {
@@ -240,6 +379,28 @@ body {
 }
 .market-card.closed::before {
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.07), transparent 50%);
+}
+
+.market-card.pre-market {
+  border-color: rgba(245, 158, 11, 0.38);
+}
+.market-card.pre-market::before {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), transparent 55%);
+}
+.market-card.pre-market .status-label {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+}
+
+.market-card.pre-market {
+  border-color: rgba(245, 158, 11, 0.35);
+}
+.market-card.pre-market::before {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), transparent 55%);
+}
+.market-card.pre-market .status-label {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
 }
 
 .card-main {
@@ -370,6 +531,7 @@ body {
   display: flex;
   justify-content: flex-start;
   font-size: 10.5px;
+  line-height: 1.35;
 }
 
 .muted {

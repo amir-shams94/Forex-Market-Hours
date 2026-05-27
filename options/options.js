@@ -1,7 +1,8 @@
 import { AVAILABLE_MARKETS } from '../lib/markets.js';
 import { renderCountryMap } from '../lib/country-maps.js';
 import { getSettings, updateSettings } from '../lib/storage.js';
-import { validateApiKey } from '../lib/tradinghours.js';
+import { validateApiKey } from '../lib/finnhub.js';
+import { formatSessionWindow } from '../lib/session.js';
 
 const marketListEl = document.getElementById('market-list');
 const customListEl = document.getElementById('custom-markets');
@@ -23,8 +24,9 @@ const presetBtns = document.querySelectorAll('.preset-btn');
 let settings = null;
 
 function describeHours(market) {
+  const timeFormat = settings?.timeFormat || '24h';
   return market.sessions
-    .map(s => `${s.open}–${s.close}`)
+    .map(s => formatSessionWindow(s, timeFormat))
     .join(' · ');
 }
 
@@ -194,7 +196,7 @@ testApiBtn.addEventListener('click', async () => {
   testApiBtn.disabled = false;
   testApiBtn.textContent = 'Test';
   if (result.ok) {
-    apiStatusEl.textContent = 'Connected to TradingHours.com.';
+    apiStatusEl.textContent = 'Connected to Finnhub.';
     apiStatusEl.classList.add('ok');
   } else {
     apiStatusEl.textContent = `Connection failed: ${result.error}`;
