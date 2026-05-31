@@ -10,7 +10,8 @@ import {
   ensurePreMarketSessions,
   getUserTimezone,
   zonedTimeToUtc,
-  getZonedParts
+  getZonedParts,
+  isForexSpotOpenAt
 } from '../lib/session.js';
 import { renderCountryMap } from '../lib/country-maps.js';
 import { getSettings, onChange, updateSettings } from '../lib/storage.js';
@@ -155,6 +156,8 @@ function nextEtOpenCloseUtc(marketId, now) {
   if (!def) return null;
   const etTz = 'America/New_York';
   const etParts = getZonedParts(now, etTz);
+  const nowMs = now.getTime();
+  const dayMs = 24 * 60 * 60 * 1000;
 
   const openMin = parseHHMM(def.open);
   const closeMin = parseHHMM(def.close);
@@ -168,7 +171,7 @@ function nextEtOpenCloseUtc(marketId, now) {
       closeMin > openMin
         ? { y: openDayEt.year, mo: openDayEt.month, d: openDayEt.day }
         : (() => {
-            const next = new Date(Date.UTC(openDayEt.year, openDayEt.month - 1, openDayEt.day) + 24 * 60 * 60 * 1000);
+            const next = new Date(Date.UTC(openDayEt.year, openDayEt.month - 1, openDayEt.day) + dayMs);
             return { y: next.getUTCFullYear(), mo: next.getUTCMonth() + 1, d: next.getUTCDate() };
           })();
     return zonedTimeToUtc(
@@ -181,18 +184,28 @@ function nextEtOpenCloseUtc(marketId, now) {
     );
   };
 
-  const openUtcToday = openUtcFor(etParts.year, etParts.month, etParts.day);
-  const closeUtcToday = closeUtcForOpenUtc(openUtcToday);
+  const todayUtc = Date.UTC(etParts.year, etParts.month - 1, etParts.day);
+  for (let offset = 0; offset < 10; offset++) {
+    const d = new Date(todayUtc + offset * dayMs);
+    const p = getZonedParts(d, etTz);
+    const openUtc = openUtcFor(p.year, p.month, p.day);
+    const closeUtc = closeUtcForOpenUtc(openUtc);
+    const openMs = openUtc.getTime();
+    const closeMs = closeUtc.getTime();
 
-  // If the full session already ended, move to tomorrow's ET date.
-  if (now.getTime() >= closeUtcToday.getTime()) {
-    const tomorrow = new Date(Date.UTC(etParts.year, etParts.month - 1, etParts.day) + 24 * 60 * 60 * 1000);
-    const t = getZonedParts(tomorrow, etTz);
-    const openUtc = openUtcFor(t.year, t.month, t.day);
-    return { openUtc, closeUtc: closeUtcForOpenUtc(openUtc) };
+    if (nowMs >= closeMs) continue;
+
+    if (nowMs >= openMs && nowMs < closeMs) {
+      if (isForexSpotOpenAt(now)) return { openUtc, closeUtc };
+      continue;
+    }
+
+    if (nowMs < openMs && isForexSpotOpenAt(openUtc)) {
+      return { openUtc, closeUtc };
+    }
   }
 
-  return { openUtc: openUtcToday, closeUtc: closeUtcToday };
+  return null;
 }
 
 function applyFxEtOverride(status, market, now, timeFormat) {
@@ -208,7 +221,8 @@ function applyFxEtOverride(status, market, now, timeFormat) {
   const nowMs = now.getTime();
   const openMs = next.openUtc.getTime();
   const closeMs = next.closeUtc.getTime();
-  const isOpen = nowMs >= openMs && nowMs < closeMs;
+  const inSession = nowMs >= openMs && nowMs < closeMs;
+  const isOpen = inSession && isForexSpotOpenAt(now);
 
   const merged = { ...status };
   merged.isOpen = isOpen;
